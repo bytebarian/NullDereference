@@ -6,6 +6,10 @@
 #include <iostream>
 using namespace std;
 
+void my_null_func() 
+{
+	printf("Hello NULL World");
+}
 
 int main()
 {
@@ -20,10 +24,17 @@ int main()
 
 	DWORD result = NtAllocateVirtualMemory(GetCurrentProcess(), &pBaseAddr, 0, &uSize, MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, PAGE_EXECUTE_READWRITE);
 
-	char source[] = "Hello it's NULL";
+	/*char source[] = "Hello it's NULL";
 	memcpy(NULL, source, sizeof(source));
 
-	printf("strlen(NULL): %i\n", strlen(NULL));
+	printf("strlen(NULL): %i\n", strlen(NULL));*/
+
+	void(*func)(void);
+	func = my_null_func;
+	memcpy(NULL, &func, sizeof(&func));
+
+	void(*nullFunc)(void) = NULL;
+	nullFunc();
 
 	getchar();
 }
