@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <windows.h>
 #include <iostream>
+using namespace std;
 
 
 int main()
@@ -17,10 +18,13 @@ int main()
 	PVOID pBaseAddr = (PVOID)1;
 	ULONG uSize = 0x1000;
 
-	DWORD result = NtAllocateVirtualMemory(GetCurrentProcess(), &pBaseAddr, 0, &uSize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+	DWORD result = NtAllocateVirtualMemory(GetCurrentProcess(), &pBaseAddr, 0, &uSize, MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, PAGE_EXECUTE_READWRITE);
 
-	memset(NULL, 0, 0x1000);
+	char source[] = "Hello it's NULL";
+	memcpy(NULL, source, sizeof(source));
+
 	printf("strlen(NULL): %i\n", strlen(NULL));
+
 	getchar();
 }
 
