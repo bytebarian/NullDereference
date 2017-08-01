@@ -4,38 +4,41 @@
 #include "stdafx.h"
 #include <windows.h>
 #include <iostream>
+#include <conio.h>
+#include <string>
 using namespace std;
 
-void my_null_func() 
-{
-	printf("Hello NULL World");
-}
-
-int main()
+#pragma region 
+void init()
 {
 	DWORD(WINAPI *NtAllocateVirtualMemory)(HANDLE ProcessHandle, PVOID *BaseAddress, ULONG ZeroBits, PULONG RegionSize, ULONG AllocationType, ULONG Protect);
 
 	*(FARPROC *)&NtAllocateVirtualMemory = GetProcAddress(LoadLibrary(L"ntdll.dll"), "NtAllocateVirtualMemory");
 	if (!NtAllocateVirtualMemory)
-		return 0;
+		return;
 
 	PVOID pBaseAddr = (PVOID)1;
 	ULONG uSize = 0x1000;
 
 	DWORD result = NtAllocateVirtualMemory(GetCurrentProcess(), &pBaseAddr, 0, &uSize, MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, PAGE_EXECUTE_READWRITE);
 
-	/*char source[] = "Hello it's NULL";
+	char source[] = "Hello it's NULL";
 	memcpy(NULL, source, sizeof(source));
+}
+#pragma endregion
 
-	printf("strlen(NULL): %i\n", strlen(NULL));*/
+int main()
+{
+	init();
 
-	void(*func)(void);
-	func = my_null_func;
-	memcpy(NULL, &func, sizeof(&func));
+	char *s = NULL;
 
-	void(*nullFunc)(void) = NULL;
-	nullFunc();
+	for (int i = 0; i < strlen(s); i++) {
+		cout << s[i];
+	}
 
 	getchar();
 }
+
+
 
