@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace NullDemo
+namespace NullRefDemo
 {
     class Program
     {
@@ -12,7 +12,7 @@ namespace NullDemo
             Init();
 
             char[] tab = null;
-            foreach(var c in tab)
+            foreach (var c in tab)
             {
                 Console.Write(c);
             }
@@ -37,14 +37,14 @@ namespace NullDemo
 
             IntPtr baseAddress = (IntPtr)1;
             var name = Process.GetCurrentProcess().ProcessName;
-            NtAllocateVirtualMemory(Process.GetCurrentProcess().Handle, 
-                ref baseAddress, 
-                0, 
-                ref uSize, 
-                0x3000, 
+            NtAllocateVirtualMemory(Process.GetCurrentProcess().Handle,
+                ref baseAddress,
+                0,
+                ref uSize,
+                0x3000,
                 0x40);
 
-            string test = "Hello i am NULL";
+            string test = "8====D karny kutas za zle alokowanie";
 
             byte[] sbytes = Encoding.Unicode.GetBytes(test);
             byte[] bLength = BitConverter.GetBytes(sbytes.Length);
