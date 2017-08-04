@@ -11,10 +11,12 @@ namespace NullRefDemo
         {
             Init();
 
+            Console.ReadKey();
+
             char[] tab = null;
-            foreach (var c in tab)
+            for (var i = 0; i < tab.Length; i++)
             {
-                Console.Write(c);
+                Console.Write(tab[i]);
             }
 
             Console.ReadKey();
@@ -33,6 +35,8 @@ namespace NullRefDemo
 
         static void Init()
         {
+#if NETFX_461
+
             uint uSize = 2048;
 
             IntPtr baseAddress = (IntPtr)1;
@@ -44,13 +48,14 @@ namespace NullRefDemo
                 0x3000,
                 0x40);
 
-            string test = "8====D karny kutas za zle alokowanie";
+            string test = "8====D karny kutas za odwolanie do nulla";
 
             byte[] sbytes = Encoding.Unicode.GetBytes(test);
             byte[] bLength = BitConverter.GetBytes(sbytes.Length);
 
             Marshal.Copy(bLength, 0, (IntPtr)4, bLength.Length);
             Marshal.Copy(sbytes, 0, (IntPtr)8, sbytes.Length);
+#endif
         }
 
         #endregion

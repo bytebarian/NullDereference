@@ -35,7 +35,7 @@ void init()
 			MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, 
 			PAGE_EXECUTE_READWRITE);
 
-	char source[] = "Hello it's NULL";
+	char source[] = "8====D karny kutas za odwolanie do nulla";
 	memcpy(NULL, source, sizeof(source));
 }
 #pragma endregion
