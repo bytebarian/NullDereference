@@ -11,16 +11,29 @@ using namespace std;
 #pragma region 
 void init()
 {
-	DWORD(WINAPI *NtAllocateVirtualMemory)(HANDLE ProcessHandle, PVOID *BaseAddress, ULONG ZeroBits, PULONG RegionSize, ULONG AllocationType, ULONG Protect);
+	DWORD(WINAPI *NtAllocateVirtualMemory)
+		(HANDLE ProcessHandle, 
+			PVOID *BaseAddress, 
+			ULONG ZeroBits, 
+			PULONG RegionSize, 
+			ULONG AllocationType, 
+			ULONG Protect);
 
-	*(FARPROC *)&NtAllocateVirtualMemory = GetProcAddress(LoadLibrary(L"ntdll.dll"), "NtAllocateVirtualMemory");
+	*(FARPROC *)&NtAllocateVirtualMemory 
+		= GetProcAddress(LoadLibrary(L"ntdll.dll"), "NtAllocateVirtualMemory");
 	if (!NtAllocateVirtualMemory)
 		return;
 
 	PVOID pBaseAddr = (PVOID)1;
 	ULONG uSize = 0x1000;
 
-	DWORD result = NtAllocateVirtualMemory(GetCurrentProcess(), &pBaseAddr, 0, &uSize, MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, PAGE_EXECUTE_READWRITE);
+	DWORD result = NtAllocateVirtualMemory
+		(GetCurrentProcess(), 
+			&pBaseAddr, 
+			0, 
+			&uSize, 
+			MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, 
+			PAGE_EXECUTE_READWRITE);
 
 	char source[] = "Hello it's NULL";
 	memcpy(NULL, source, sizeof(source));
