@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NullDereference", "NullDere
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullRefDemo", "NullRefDemo\NullRefDemo.csproj", "{7C9EFA8C-ADB8-4AA7-8978-443E768529D0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NullRefEx", "NullRefEx\NullRefEx.vcxproj", "{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,16 @@ Global
 		{7C9EFA8C-ADB8-4AA7-8978-443E768529D0}.Release|x64.Build.0 = Release|Any CPU
 		{7C9EFA8C-ADB8-4AA7-8978-443E768529D0}.Release|x86.ActiveCfg = Release|Any CPU
 		{7C9EFA8C-ADB8-4AA7-8978-443E768529D0}.Release|x86.Build.0 = Release|Any CPU
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Debug|x64.ActiveCfg = Debug|x64
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Debug|x64.Build.0 = Debug|x64
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Debug|x86.ActiveCfg = Debug|Win32
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Debug|x86.Build.0 = Debug|Win32
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Release|Any CPU.ActiveCfg = Release|Win32
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Release|x64.ActiveCfg = Release|x64
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Release|x64.Build.0 = Release|x64
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Release|x86.ActiveCfg = Release|Win32
+		{EBFC5FC9-C670-4AAC-94B7-794C6C50A660}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
