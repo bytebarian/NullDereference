@@ -10,6 +10,8 @@ int main()
 {
 	char *s = NULL;
 
+	getchar();
+
 	for (int i = 0; i < strlen(s); i++) {
 		cout << s[i];
 	}

@@ -1,27 +1,32 @@
-// NullDereference.cpp : Defines the entry point for the console application.
+// BeepHook.cpp : Defines the exported functions for the DLL application.
 //
 
 #include "stdafx.h"
-#include <windows.h>
-#include <iostream>
-#include <conio.h>
+#include <easyhook.h>
 #include <string>
+#include <iostream>
+#include <Windows.h>
+#include <conio.h>
 #include <winioctl.h>
 #include <TlHelp32.h>
+
 using namespace std;
 
-#pragma region 
-void init()
+// EasyHook will be looking for this export to support DLL injection. If not found then 
+// DLL injection will fail.
+extern "C" void __declspec(dllexport) __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo);
+
+void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo)
 {
 	DWORD(WINAPI *NtAllocateVirtualMemory)
-		(HANDLE ProcessHandle, 
-			PVOID *BaseAddress, 
-			ULONG ZeroBits, 
-			PULONG RegionSize, 
-			ULONG AllocationType, 
+		(HANDLE ProcessHandle,
+			PVOID *BaseAddress,
+			ULONG ZeroBits,
+			PULONG RegionSize,
+			ULONG AllocationType,
 			ULONG Protect);
 
-	*(FARPROC *)&NtAllocateVirtualMemory 
+	*(FARPROC *)&NtAllocateVirtualMemory
 		= GetProcAddress(LoadLibrary(L"ntdll.dll"), "NtAllocateVirtualMemory");
 	if (!NtAllocateVirtualMemory)
 		return;
@@ -30,14 +35,14 @@ void init()
 	ULONG uSize = 0x1000;
 
 	DWORD result = NtAllocateVirtualMemory
-		(GetCurrentProcess(), 
-			&pBaseAddr, 
-			0, 
-			&uSize, 
-			MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, 
-			PAGE_EXECUTE_READWRITE);
+	(GetCurrentProcess(),
+		&pBaseAddr,
+		0,
+		&uSize,
+		MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN,
+		PAGE_EXECUTE_READWRITE);
 
-	byte _ASM_Code_Calc[] = {
+	unsigned char _ASM_Code_Calc[] = {
 		0xfc,0xe8,0x89,0x00,0x00,0x00,0x60,0x89,0xe5,0x31,0xd2,0x64,0x8b,0x52,0x30
 		,0x8b,0x52,0x0c,0x8b,0x52,0x14,0x8b,0x72,0x28,0x0f,0xb7,0x4a,0x26,0x31,0xff
 		,0x31,0xc0,0xac,0x3c,0x61,0x7c,0x02,0x2c,0x20,0xc1,0xcf,0x0d,0x01,0xc7,0xe2
@@ -54,21 +59,8 @@ void init()
 		,0x65,0x78,0x65,0x00
 	};
 	memcpy(NULL, _ASM_Code_Calc, sizeof(_ASM_Code_Calc));
+
+	return;
 }
-#pragma endregion
-
-int main()
-{
-	init();
-
-	getchar();
-
-	void(*foo)(void);
-	foo = NULL;
-	foo();
-
-	getchar();
-}
-
 
 
